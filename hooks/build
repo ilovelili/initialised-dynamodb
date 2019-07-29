@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Allows building of different dynamodb tagged images using  git tags / branches.
+# The build args are passed to the image and correspond to the dynamodb version
+
+TAG="latest"
+
+if [ "$SOURCE_BRANCH" != "master" ]; then
+    TAG="$SOURCE_BRANCH"
+fi
+
+echo "Building on branch $SOURCE_BRANCH with tag $TAG"
+
+docker build --build-arg=DYNAMODB_DOCKER_IMAGE_TAG=$TAG -t $IMAGE_NAME .
